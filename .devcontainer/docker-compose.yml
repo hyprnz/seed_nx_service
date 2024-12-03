@@ -1,0 +1,23 @@
+services:
+    hyprnz-app:
+        extends:
+            file: docker-compose.base.yml
+            service: hyprnz-app-base
+        ports:
+            - '3000:3000' # Strangler Facade
+            - '3001:3001' # Strangler Facade - Mock Service 1
+            - '3002:3002' # Strangler Facade - Mock Service 1
+            - '3030:3030'
+        environment:
+            - AWS_REGION=ap-southeast-2
+
+    # Database service
+    hyprnz-db:
+        image: postgres:latest
+        ports:
+            - 6036:5432 # Optional, expose if you need external access, for example to connect with dbvisualiser or pgadmin
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=password12345
+            - POSTGRES_USER=hyprnz-user
+            - POSTGRES_DB=hyprnz

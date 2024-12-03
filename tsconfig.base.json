@@ -1,0 +1,34 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "allowImportingTsExtensions": true,
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "Node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "ESNext",
+        "lib": ["es2020", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "strict": true,
+        "baseUrl": ".",
+        "paths": {
+            "@hyprnz/date": ["libs/date/src/index.ts"],
+            "@hyprnz/error": ["libs/error/src/index.ts"],
+            "@hyprnz/express-middleware": ["libs/express-middleware/src/index.ts"],
+            "@hyprnz/http-client": ["libs/http-client/src/index.ts"],
+            "@hyprnz/jwt": ["libs/jwt/src/index.ts"],
+            "@hyprnz/logger": ["libs/logger/src/index.ts"],
+            "@hyprnz/validation": ["libs/validation/src/index.ts"],
+            "@hyprnz/authorisation": ["libs/authorisation/src/index.ts"],
+            "@hyprnz/cache": ["libs/cache/src/index.ts"],
+            "@hyprnz/feature-flags-api": ["libs/feature-flags/src/node/index.ts"],
+            "@hyprnz/mock": ["libs/mock/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
+}

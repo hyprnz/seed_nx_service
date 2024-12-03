@@ -1,0 +1,44 @@
+{
+    "name": "logger",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/logger/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/libs/logger",
+                "tsConfig": "libs/logger/tsconfig.lib.json",
+                "packageJson": "libs/logger/package.json",
+                "main": "libs/logger/src/index.ts",
+                "assets": ["libs/logger/*.md"],
+                "generatePackageJson": false,
+                "format": ["esm"],
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/logger"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["libs/logger/**/*.ts"]
+            }
+        }
+    }
+}

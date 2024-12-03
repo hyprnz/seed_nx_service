@@ -1,0 +1,128 @@
+{
+    "name": "service-reference-architecture",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/service-reference-architecture/src",
+    "projectType": "application",
+    "tags": [],
+    "targets": {
+        "static:lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["{projectRoot}/src/**/*.ts"]
+            }
+        },
+        "static:security": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    {
+                        "command": "npm audit --audit-level moderate"
+                    }
+                ]
+            }
+        },
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/apps/service-reference-architecture",
+                "format": ["esm"],
+                "bundle": true,
+                "generatePackageJson": true,
+                "main": "{projectRoot}/src/main.ts",
+                "tsConfig": "{projectRoot}/tsconfig.app.json",
+                "sourceMap": true
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/apps/service-reference-architecture"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false
+            }
+        },
+        "serve": {
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "service-reference-architecture:build",
+                "runBuildTargetDependencies": true
+            }
+        },
+        "container:build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "docker build --build-arg COMMIT_SHA=${COMMIT_SHA} -t ${ECR_REGISTRY}/service-reference-architecture:latest -t ${ECR_REGISTRY}/service-reference-architecture:${BUILT_IMAGE_TAG} -f {projectRoot}/Dockerfile ."
+                ],
+                "parallel": false
+            },
+            "cwd": "/app"
+        },
+        "container:push": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["docker push ${ECR_REGISTRY}/service-reference-architecture:${BUILT_IMAGE_TAG}"]
+            }
+        },
+        "container:push-latest": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["docker push ${ECR_REGISTRY}/service-reference-architecture:latest"]
+            }
+        },
+        "test:social:e2e": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["echo TODO, not implemented yet..."],
+                "parallel": false
+            }
+        },
+        "db:migrate": {
+            "executor": "nx:run-commands",
+            "outputs": ["{projectRoot}/src/database/migrations"],
+            "options": {
+                "commands": ["typeorm-ts-node-esm migration:run -t each -d src/database/database.datasource.ts"],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "db:migrate:generate": {
+            "executor": "nx:run-commands",
+            "outputs": ["{projectRoot}/src/database/migrations"],
+            "options": {
+                "commands": [
+                    "typeorm-ts-node-esm migration:generate -d src/database/database.datasource.ts src/database/migrations/newest-migration-please-rename"
+                ],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "db:migrate:create": {
+            "executor": "nx:run-commands",
+            "outputs": ["{projectRoot}/src/database/migrations"],
+            "options": {
+                "commands": ["typeorm-ts-node-esm migration:create src/database/migrations/newest-migration-please-rename"],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "db:migrate:revert": {
+            "executor": "nx:run-commands",
+            "outputs": ["{projectRoot}/src/database/migrations"],
+            "options": {
+                "commands": ["typeorm-ts-node-esm migration:revert -d src/database/database.datasource.ts"],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "db:migrate:drop": {
+            "executor": "nx:run-commands",
+            "outputs": ["{projectRoot}/src/database/migrations"],
+            "options": {
+                "commands": ["typeorm-ts-node-esm schema:drop -d src/database/database.datasource.ts"],
+                "cwd": "{projectRoot}"
+            }
+        }
+    }
+}

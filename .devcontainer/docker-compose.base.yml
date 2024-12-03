@@ -1,0 +1,18 @@
+services:
+    hyprnz-app-base:
+        restart: always
+        working_dir: /app
+        command: sleep infinity
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ..:/app:cached
+            - ~/.gitconfig:/root/.gitconfig:delegated
+            # npm i from inside the container
+            - ~/.npmrc:/root/.npmrc:delegated
+            # Allow SLS to read an AWS profile (see serverless.yml)
+            # - ~/.aws:/root/.aws:delegated
+            # Allow Git SSH to work in your container
+            - ~/.ssh/:/root/.ssh/:delegated
+            - ~/.aws/:/root/.aws/:delegated

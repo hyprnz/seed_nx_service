@@ -1,0 +1,44 @@
+{
+    "name": "authorisation",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/authorisation/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/libs/authorisation",
+                "tsConfig": "libs/authorisation/tsconfig.lib.json",
+                "packageJson": "libs/authorisation/package.json",
+                "main": "libs/authorisation/src/index.ts",
+                "assets": ["libs/authorisation/*.md"],
+                "generatePackageJson": false,
+                "format": ["esm"],
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/authorisation"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["libs/authorisation/**/*.ts"]
+            }
+        }
+    }
+}

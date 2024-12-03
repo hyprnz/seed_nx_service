@@ -1,0 +1,44 @@
+{
+    "name": "cache",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/cache/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/libs/cache",
+                "tsConfig": "libs/cache/tsconfig.lib.json",
+                "packageJson": "libs/cache/package.json",
+                "main": "libs/cache/src/index.ts",
+                "assets": ["libs/cache/*.md"],
+                "generatePackageJson": false,
+                "format": ["esm"],
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/cache"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["libs/cache/**/*.ts"]
+            }
+        }
+    }
+}

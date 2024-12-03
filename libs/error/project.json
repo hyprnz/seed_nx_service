@@ -1,0 +1,44 @@
+{
+    "name": "error",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/error/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/libs/error",
+                "tsConfig": "libs/error/tsconfig.lib.json",
+                "packageJson": "libs/error/package.json",
+                "main": "libs/error/src/index.ts",
+                "assets": ["libs/error/*.md"],
+                "generatePackageJson": false,
+                "format": ["esm"],
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/error"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["libs/error/**/*.ts"]
+            }
+        }
+    }
+}

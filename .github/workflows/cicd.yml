@@ -1,0 +1,66 @@
+name: 'CI/CD'
+
+on:
+    push:
+        branches: ['main']
+    pull_request:
+
+env:
+    COMMIT_SHA: ${{ github.sha }}
+    BUILT_IMAGE_TAG: ${{ github.sha }}-rc
+    TF_VAR_BUILT_IMAGE_TAG: ${{ github.sha }}-rc
+    AWS_REGION: ap-southeast-2
+
+permissions:
+    id-token: write # For OIDC connection
+    actions: read
+    contents: read # For checking out code
+
+jobs:
+    build_deploy:
+        runs-on: ubuntu-latest
+        environment: non-prod
+        steps:
+            - name: 'Checkout'
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: 'Cache Node Modules'
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+
+            - name: 'Install NPM dependencies'
+              run: npm ci
+
+            - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+              uses: nrwl/nx-set-shas@v4
+
+            - name: 'Lint, Security, Unit Test, Build'
+              run: |
+                  npx nx affected -t static:lint static:security test:unit build --verbose;
+
+#            - name: 'Configure AWS Credentials'
+#              uses: aws-actions/configure-aws-credentials@v4
+#              with:
+#                  role-to-assume: ${{ secrets.AWS_GITHUB_ACTION_ROLE_ARN }}
+#                  aws-region: ${{ env.AWS_REGION }}
+#
+#            - name: 'Login to AWS ECR'
+#              id: login-ecr
+#              uses: aws-actions/amazon-ecr-login@v2
+#
+#            - name: 'Build and Push Container'
+#              run: |
+#                  npx nx affected -t container:build --verbose; \
+#                  npx nx affected -t container:push --verbose;
+#
+#            - name: 'Deploy'
+#              run: |
+#                  npx nx affected -t deploy:uat --verbose;
+#
+#            - name: 'E2E Test'
+#              run: |
+#                  npx nx affected -t test:social:e2e --verbose;

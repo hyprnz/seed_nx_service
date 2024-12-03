@@ -1,0 +1,45 @@
+{
+    "name": "mock",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/mock/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "platform": "node",
+                "outputPath": "dist/libs/mock",
+                "tsConfig": "libs/mock/tsconfig.lib.json",
+                "packageJson": "libs/mock/package.json",
+                "main": "libs/mock/src/index.ts",
+                "assets": ["libs/mock/*.md"],
+                "generatePackageJson": false,
+                "format": ["esm"],
+                "esbuildOptions": {
+                    "sourcemap": true,
+                    "outExtension": {
+                        ".js": ".js"
+                    }
+                }
+            }
+        },
+        "test:unit": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{workspaceRoot}/coverage/libs/mock"],
+            "options": {
+                "configFile": "{projectRoot}/vite.config.ts",
+                "coverage": true,
+                "parallel": false,
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "lintFilePatterns": ["libs/mock/**/*.ts"]
+            }
+        }
+    }
+}

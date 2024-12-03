@@ -1,0 +1,112 @@
+{
+    "info": {
+        "_postman_id": "1e927b6f-89c3-4ac5-b102-6c063a7ff197",
+        "name": "Service Reference Architecture",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "CreateEvent",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "x-correlation-id",
+                        "value": "1234-5678-9012",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImxvY2FsLmNvbS5hdSJ9.eyJzdWIiOiJUZXN0IFVzZXIiLCJ1c2VyX2lkIjoiVGVzdCBVc2VyIiwibmFtZSI6IlRlc3QgdXNlciIsImlhdCI6MTczMTk3MDUxMywiZXhwIjoxNzQwNjEwNTEzLCJpc3MiOiJAc2FpbC9qd3QifQ.HgOsid7DOqJ0IjL-M4x1hb0mehmIFWl1Gif-7KL_8I4",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"subject\": \"test-user-1234\",\n    \"subjectName\": \"Test User\",\n    \"name\": \"Testing\",\n    \"description\": \"doing some testing\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:3000/event",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "3000",
+                    "path": ["event"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GetEvent",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "x-correlation-id",
+                        "value": "1234-5678-9012",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImxvY2FsLmNvbS5hdSJ9.eyJzdWIiOiJUZXN0IFVzZXIiLCJ1c2VyX2lkIjoiVGVzdCBVc2VyIiwibmFtZSI6IlRlc3QgdXNlciIsImlhdCI6MTczMjA1NjYyMiwiZXhwIjoxNzQwNjk2NjIyLCJpc3MiOiJAc2FpbC9qd3QifQ.rNp03UDTWur2RrpN71gV2dPV_Fc-RJeOeVe8pmw6l1Y",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"subject\": \"drya024\",\n    \"subjectName\": \"Davin\",\n    \"name\": \"Testing\",\n    \"description\": \"doing some testing\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:3000/event/a71e6634-4f63-4eb0-941b-9dda7758ecfc",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "3000",
+                    "path": ["event", "a71e6634-4f63-4eb0-941b-9dda7758ecfc"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "ReadinessProbe",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/probe/readiness",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "3000",
+                    "path": ["probe", "readiness"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "LivenessProbe",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/probe/liveness",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "3000",
+                    "path": ["probe", "liveness"]
+                }
+            },
+            "response": []
+        }
+    ]
+}
