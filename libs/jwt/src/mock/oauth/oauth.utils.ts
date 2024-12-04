@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Algorithm, Secret, SignOptions, PrivateKey } from 'jsonwebtoken';
-import { privateSymmetricKey as privateSymmetricKey } from './keys/symmetric/symmetric.private';
+import { privateSymmetricKey as privateSymmetricKey } from './keys/symmetric/symmetric.private.ts';
 
 const userId = 'CJ5HhFu2H303aKMukkW9SDhJS1mQVzVD@clients';
 

@@ -75,11 +75,12 @@
                 "commands": ["docker push ${ECR_REGISTRY}/service-reference-architecture:latest"]
             }
         },
-        "test:social:e2e": {
+        "test:social": {
             "executor": "nx:run-commands",
+            "defaultConfiguration": "development",
             "options": {
-                "commands": ["echo TODO, not implemented yet..."],
-                "parallel": false
+                "command": "cucumber-js",
+                "cwd": "apps/service-reference-architecture"
             }
         },
         "db:migrate": {
