@@ -48,7 +48,7 @@
         "@faker-js/faker": "^9.2.0",
         "@nx/esbuild": "19.1.2",
         "@nx/eslint": "19.1.2",
-        "@nx/eslint-plugin": "19.1.2",
+        "@nx/eslint-plugin": "20.2.1",
         "@nx/js": "19.3.0",
         "@nx/node": "19.1.2",
         "@nx/react": "19.3.0",
